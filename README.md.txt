@@ -1,5 +1,3 @@
-SALMAN AHMED 
+Salman Ahmed
 
-
-
-Recently graduated from punjab university of gujrawala campus in bsit with cgpa 3.30...
+Recently graduated from Punjab University of Gujranwala Campus with a BSIT degree and a CGPA of 3.30.
