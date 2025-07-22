@@ -43,9 +43,7 @@ export default function AboutMe() {
             isDark ? "text-slate-300" : "text-slate-700"
           }`}
         >
-          I'm a passionate MERN Stack Developer with a focus on building full-stack
-          web applications. I'm also skilled in SQL and experienced in integrating
-          various technologies to deliver scalable and efficient solutions.
+        MERN Stack Developer with hands-on experience using AI to build modern web applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Adept at creating responsive, secure, and scalable systems with a strong focus on RESTful APIs and production-grade deployment. Also a skilled E-commerce Virtual Assistant with 3+ years of experience in managing dropshipping operations on Amazon, Costco, and Walmart—specializing in product research, listing optimization, and maintaining account health.
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 justify-center">

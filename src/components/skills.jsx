@@ -7,7 +7,7 @@ import {
   FaReact,
   FaNodeJs,
   FaCuttlefish,
-  FaGitAlt,
+  FaGithub,
   FaFigma,
   FaCode,
   FaUserTie,
@@ -45,9 +45,9 @@ const backendSkills = [
 const toolCategories = {
   "Dev Tools": [
     {
-      label: "Git",
-      icon: <FaGitAlt className="text-red-500" />,
-      tooltip: "Version control system",
+      label: "GitHub",
+      icon: <FaGithub className="text-gray-800 dark:text-white" />,
+      tooltip: "Version control and collaboration platform",
       percent: 85,
     },
     {
