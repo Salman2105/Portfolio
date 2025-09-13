@@ -56,7 +56,7 @@ export default function Navbar() {
             isDark ? "text-sky-400" : "text-sky-600"
           }`}
         >
-          Salman.Ahmed
+          Salman Ahmed
         </a>
 
         <div className="flex items-center gap-4">

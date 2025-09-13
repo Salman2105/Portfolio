@@ -20,7 +20,7 @@ export default function Contact() {
 
     try {
       // EmailJS configuration - Replace these with your actual values
-      const serviceId = 'service_nml7h2x';
+      const serviceId = 'service_u47gbny';
       const templateId = 'template_6l25lgs';
       const publicKey = 'XMelSz741rd9IlMD_';
 

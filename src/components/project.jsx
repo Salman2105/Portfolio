@@ -80,6 +80,32 @@ export default function Projects() {
               >
                 {project.description}
               </p>
+              {/* LinkedIn embed for EduMids project */}
+              {project.title === "EduMids – Learning Management System" && (
+                <div className="mb-4 flex justify-center">
+                  <iframe
+                    src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7366727431434452992?compact=1"
+                    height="399"
+                    width="504"
+                    frameBorder="0"
+                    allowFullScreen
+                    title="Embedded post"
+                  ></iframe>
+                </div>
+              )}
+              {/* LinkedIn embed for React Native Weather App */}
+              {project.title === "React Native Weather App" && (
+                <div className="mb-4 flex justify-center">
+                  <iframe
+                    src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7371131573964017664?compact=1"
+                    height="399"
+                    width="504"
+                    frameBorder="0"
+                    allowFullScreen
+                    title="Embedded post"
+                  ></iframe>
+                </div>
+              )}
               <a
                 href={project.link}
                 target="_blank"
