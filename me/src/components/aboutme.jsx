@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTheme } from "../contexts/ThemeContext";
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs } from "react-icons/fa";
 import { SiMongodb, SiExpress, SiMysql } from "react-icons/si";
 
@@ -14,10 +15,14 @@ const skills = [
 ];
 
 export default function AboutMe() {
+  const { isDark } = useTheme();
+
   return (
     <section
       id="about"
-      className="relative py-20 bg-white dark:bg-slate-900 text-center"
+      className={`relative py-20 text-center transition-colors duration-300 ${
+        isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"
+      }`}
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -26,13 +31,19 @@ export default function AboutMe() {
         viewport={{ once: true }}
         className="max-w-4xl mx-auto px-4"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-sky-600 dark:text-sky-400 mb-6">
+        <h2
+          className={`text-3xl md:text-4xl font-bold mb-6 ${
+            isDark ? "text-sky-400" : "text-sky-600"
+          }`}
+        >
           About Me
         </h2>
-        <p className="text-slate-700 dark:text-slate-300 text-lg mb-12">
-          I'm a passionate MERN Stack Developer with a focus on building full-stack web
-          applications. I'm also skilled in SQL and experienced in integrating various
-          technologies to deliver scalable and efficient solutions.
+        <p
+          className={`text-lg mb-12 ${
+            isDark ? "text-slate-300" : "text-slate-700"
+          }`}
+        >
+        MERN Stack Developer with hands-on experience using AI to build modern web applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Adept at creating responsive, secure, and scalable systems with a strong focus on RESTful APIs and production-grade deployment. Also a skilled E-commerce Virtual Assistant with 3+ years of experience in managing dropshipping operations on Amazon, Costco, and Walmart—specializing in product research, listing optimization, and maintaining account health.
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 justify-center">
@@ -44,7 +55,11 @@ export default function AboutMe() {
               className="flex flex-col items-center"
             >
               <div className="text-4xl mb-2">{skill.icon}</div>
-              <span className="text-sm font-medium text-slate-600 dark:text-slate-200">
+              <span
+                className={`text-sm font-medium ${
+                  isDark ? "text-slate-200" : "text-slate-600"
+                }`}
+              >
                 {skill.label}
               </span>
             </motion.div>

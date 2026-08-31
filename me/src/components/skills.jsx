@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTheme } from "../contexts/ThemeContext";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -6,7 +7,7 @@ import {
   FaReact,
   FaNodeJs,
   FaCuttlefish,
-  FaGitAlt,
+  FaGithub,
   FaFigma,
   FaCode,
   FaUserTie,
@@ -44,9 +45,9 @@ const backendSkills = [
 const toolCategories = {
   "Dev Tools": [
     {
-      label: "Git",
-      icon: <FaGitAlt className="text-red-500" />,
-      tooltip: "Version control system",
+      label: "GitHub",
+      icon: <FaGithub className="text-gray-800 dark:text-white" />,
+      tooltip: "Version control and collaboration platform",
       percent: 85,
     },
     {
@@ -131,8 +132,12 @@ const toolCategories = {
 };
 
 export default function Skills() {
+  const { isDark } = useTheme();
+
   return (
-    <section id="skills" className="relative py-20 bg-white dark:bg-slate-900 text-center">
+    <section id="skills" className={`relative py-20 text-center transition-colors duration-300 ${
+      isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"
+    }`}>
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -141,7 +146,9 @@ export default function Skills() {
         className="max-w-5xl mx-auto px-4"
       >
         {/* ------------------ Section Heading ------------------ */}
-        <h2 className="text-3xl md:text-4xl font-bold text-sky-600 dark:text-sky-400 mb-12">
+        <h2 className={`text-3xl md:text-4xl font-bold mb-12 ${
+          isDark ? "text-sky-400" : "text-sky-600"
+        }`}>
           Skills & Tech Stack
         </h2>
 
@@ -165,6 +172,8 @@ export default function Skills() {
 
 // ----------------------- Reusable Grid Component ----------------------- //
 function SkillGrid({ title, items, showBars = true }) {
+  const { isDark } = useTheme();
+
   return (
     <div className="mb-12">
       <h3 className="text-xl font-semibold text-sky-500 mb-6">{title}</h3>
@@ -178,14 +187,18 @@ function SkillGrid({ title, items, showBars = true }) {
             <div className="text-4xl mb-2" title={tooltip ?? label}>
               {icon}
             </div>
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-200">
+            <span className={`text-sm font-medium ${
+              isDark ? "text-slate-200" : "text-slate-600"
+            }`}>
               {label}
             </span>
             {percent !== undefined && (
               <>
                 <span className="text-xs text-sky-500 mt-1 font-semibold">{percent}%</span>
                 {showBars && (
-                  <div className="w-full mt-2 bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                  <div className={`w-full mt-2 h-2 rounded-full overflow-hidden ${
+                    isDark ? "bg-slate-700" : "bg-slate-200"
+                  }`}>
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${percent}%` }}

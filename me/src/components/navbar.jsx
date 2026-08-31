@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 import {
   Home,
   User,
@@ -23,7 +24,8 @@ const NAV_ITEMS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +46,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        event.target.getAttribute("aria-label") !== "Toggle navigation menu"
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
+
   return (
     <header className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
       isDark ? "bg-slate-900 text-white" : "bg-white/70 backdrop-blur-lg"
@@ -55,12 +72,12 @@ export default function Navbar() {
             isDark ? "text-sky-400" : "text-sky-600"
           }`}
         >
-          Salman.Ahmed
+          Salman Ahmed
         </a>
 
         <div className="flex items-center gap-4">
           <button
-            onClick={() => setIsDark(!isDark)}
+            onClick={toggleTheme}
             className="hidden lg:block text-sm px-2 py-1 rounded-md border border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white transition"
           >
             {isDark ? "Light Mode" : "Dark Mode"}
@@ -102,6 +119,7 @@ export default function Navbar() {
       </nav>
 
       <ul
+        ref={dropdownRef}
         className={`lg:hidden absolute top-full left-0 right-0 shadow-lg px-4 py-4 space-y-3 transform transition-all duration-300 z-40 ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100 max-h-screen"
@@ -110,8 +128,8 @@ export default function Navbar() {
       >
         <li>
           <button
-            onClick={() => setIsDark(!isDark)}
-            className="mb-3 w-full text-left text-sm px-3 py-2 rounded-md border border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white transition"
+            onClick={toggleTheme}
+            className="mb-3 w-28 text-left text-sm px-2 py-2 rounded-md border border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white transition"
           >
             {isDark ? "Light Mode" : "Dark Mode"}
           </button>

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTheme } from "../contexts/ThemeContext";
 import { ExternalLink } from "lucide-react";
 
 const projects = [
@@ -29,36 +30,88 @@ const projects = [
 ];
 
 export default function Projects() {
+  const { isDark } = useTheme();
+
   return (
     <section
       id="projects"
-      className="relative py-20 bg-slate-50 dark:bg-slate-950 text-center"
+      className={`relative py-20 text-center transition-colors duration-300 ${
+        isDark ? "bg-slate-950 text-white" : "bg-slate-50 text-slate-900"
+      }`}
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="max-w-5xl mx-auto px-4"
+        className="max-w-5xl mx-auto px-2 sm:px-4"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-sky-600 dark:text-sky-400 mb-6">
+        <h2
+          className={`text-3xl md:text-4xl font-bold mb-6 ${
+            isDark ? "text-sky-400" : "text-sky-600"
+          }`}
+        >
           Projects
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={index}
               whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-md border border-slate-200 dark:border-slate-700 text-left"
+              className={`rounded-xl p-4 sm:p-6 shadow-md border text-left transition-colors duration-300 ${
+                isDark
+                  ? "bg-slate-900 border-slate-700 text-white"
+                  : "bg-white border-slate-200 text-slate-900"
+              }`}
             >
-              <h3 className="text-xl font-semibold text-sky-600 mb-2">
+              <h3
+                className={`text-xl font-semibold mb-2 ${
+                  isDark ? "text-sky-400" : "text-sky-600"
+                }`}
+              >
                 {project.title}
               </h3>
-              <p className="text-slate-600 dark:text-slate-300 mb-4">
+              <p
+                className={`mb-4 ${
+                  isDark ? "text-slate-300" : "text-slate-600"
+                }`}
+              >
                 {project.description}
               </p>
+              {/* LinkedIn embed for EduMids project */}
+              {project.title === "EduMids – Learning Management System" && (
+                <div className="mb-4 flex justify-center">
+                  <div className="w-full max-w-[504px]">
+                    <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+                      <iframe
+                        src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7366727431434452992?compact=1"
+                        className="absolute top-0 left-0 w-full h-full"
+                        frameBorder="0"
+                        allowFullScreen
+                        title="Embedded post"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* LinkedIn embed for React Native Weather App */}
+              {project.title === "React Native Weather App" && (
+                <div className="mb-4 flex justify-center">
+                  <div className="w-full max-w-[504px]">
+                    <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+                      <iframe
+                        src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7371131573964017664?compact=1"
+                        className="absolute top-0 left-0 w-full h-full"
+                        frameBorder="0"
+                        allowFullScreen
+                        title="Embedded post"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              )}
               <a
                 href={project.link}
                 target="_blank"

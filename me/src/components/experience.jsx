@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTheme } from "../contexts/ThemeContext";
 import { FaReact, FaAmazon, FaStore } from "react-icons/fa";
 import { SiMongodb, SiExpress, SiNodedotjs, SiRailway } from "react-icons/si";
 
@@ -36,8 +37,15 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const { isDark } = useTheme();
+
   return (
-    <section id="experience" className="relative py-20 bg-slate-50 dark:bg-slate-950 text-center">
+    <section
+      id="experience"
+      className={`relative py-20 text-center transition-colors duration-300 ${
+        isDark ? "bg-slate-950 text-white" : "bg-slate-50 text-slate-900"
+      }`}
+    >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -45,44 +53,76 @@ export default function Experience() {
         viewport={{ once: true }}
         className="max-w-4xl mx-auto px-4"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-sky-600 dark:text-sky-400 mb-12">
+        <h2
+          className={`text-3xl md:text-4xl font-bold mb-12 ${
+            isDark ? "text-sky-400" : "text-sky-600"
+          }`}
+        >
           Experience
         </h2>
 
-        <div className="relative border-l border-sky-500 dark:border-sky-400 ml-4">
-          {experiences.map(({ title, period, description, icon, tools }, idx) => (
-            <motion.div
-              key={title}
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.3 }}
-              className="relative mb-12 pl-6"
-            >
-              <div className="absolute -left-4 top-1 w-6 h-6 rounded-full bg-white border-4 border-sky-500 dark:border-sky-400 flex items-center justify-center">
-                <span className="text-lg">{icon}</span>
-              </div>
+        <div
+          className={`relative border-l ml-4 ${
+            isDark ? "border-sky-400" : "border-sky-500"
+          }`}
+        >
+          {experiences.map(
+            ({ title, period, description, icon, tools }, idx) => (
+              <motion.div
+                key={title}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.3 }}
+                className="relative mb-12 pl-6"
+              >
+                <div
+                  className={`absolute -left-4 top-1 w-6 h-6 rounded-full border-4 flex items-center justify-center ${
+                    isDark
+                      ? "bg-slate-950 border-sky-400"
+                      : "bg-white border-sky-500"
+                  }`}
+                >
+                  <span className="text-lg">{icon}</span>
+                </div>
 
-              <h3 className="text-xl font-semibold text-slate-700 dark:text-white mb-1">
-                {title}
-              </h3>
-              <span className="text-xs text-slate-500 dark:text-slate-400 italic block mb-2">
-                {period}
-              </span>
-              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
-                {description}
-              </p>
-              <div className="flex flex-wrap gap-2 text-xs">
-                {tools.map(({ label, icon }) => (
-                  <span
-                    key={label}
-                    className="flex items-center gap-1 bg-sky-100 text-sky-700 dark:bg-sky-700 dark:text-white px-2 py-1 rounded-full"
-                  >
-                    {icon && <>{icon}</>}
-                    {label}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+                <h3
+                  className={`text-xl font-semibold mb-1 ${
+                    isDark ? "text-white" : "text-slate-700"
+                  }`}
+                >
+                  {title}
+                </h3>
+                <span
+                  className={`text-xs italic block mb-2 ${
+                    isDark ? "text-slate-400" : "text-slate-500"
+                  }`}
+                >
+                  {period}
+                </span>
+                <p
+                  className={`text-sm leading-relaxed mb-3 ${
+                    isDark ? "text-slate-300" : "text-slate-600"
+                  }`}
+                >
+                  {description}
+                </p>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  {tools.map(({ label, icon }) => (
+                    <span
+                      key={label}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-full ${
+                        isDark
+                          ? "bg-sky-700 text-white"
+                          : "bg-sky-100 text-sky-700"
+                      }`}
+                    >
+                      {icon && <>{icon}</>}
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            )
+          )}
         </div>
       </motion.div>
     </section>
