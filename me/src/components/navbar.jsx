@@ -1,158 +1,112 @@
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "../contexts/ThemeContext";
-import {
-  Home,
-  User,
-  Folder,
-  Cpu,
-  Briefcase,
-  Settings,
-  Mail,
-  Menu,
-} from "lucide-react";
-
-const NAV_ITEMS = [
-  { label: "Home", href: "#home", icon: Home },
-  { label: "About Me", href: "#about", icon: User },
-  { label: "Projects", href: "#projects", icon: Folder },
-  { label: "Tech Stack", href: "#skills", icon: Cpu },
-  { label: "Experience", href: "#experience", icon: Briefcase },
-  { label: "Services", href: "#services", icon: Settings },
-  { label: "Contact", href: "#contact", icon: Mail },
-];
-
+import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "../contexts/theme";
+import { navigation } from "../data/portfolio";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("#home");
+  const [active, setActive] = useState("home");
   const { isDark, toggleTheme } = useTheme();
-  const dropdownRef = useRef(null);
-
+  const header = useRef(null);
+  const menuButton = useRef(null);
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
-      for (let item of NAV_ITEMS) {
-        const section = document.querySelector(item.href);
-        if (section) {
-          const offsetTop = section.offsetTop;
-          const offsetHeight = section.offsetHeight;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActive(item.href);
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-20% 0px -60% 0px", threshold: 0 },
+    );
+    document
+      .querySelectorAll("main section[id]")
+      .forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
-
   useEffect(() => {
     if (!open) return;
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        event.target.getAttribute("aria-label") !== "Toggle navigation menu"
-      ) {
+    const dismiss = (event) => {
+      if (!header.current?.contains(event.target)) setOpen(false);
+    };
+    const escape = (event) => {
+      if (event.key === "Escape") {
         setOpen(false);
+        menuButton.current?.focus();
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", escape);
+    };
   }, [open]);
-
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-      isDark ? "bg-slate-900 text-white" : "bg-white/70 backdrop-blur-lg"
-    } shadow-sm`}>
-      <nav className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+    <header className="site-header" ref={header}>
+      <nav className="container nav" aria-label="Main navigation">
         <a
-          href="/"
-          className={`text-2xl font-extrabold tracking-tight ${
-            isDark ? "text-sky-400" : "text-sky-600"
-          }`}
+          href="#home"
+          className="brand"
+          aria-label="Salman Ahmed, home"
+          onClick={() => setOpen(false)}
         >
-          Salman Ahmed
+          <span className="brand-mark">
+            s<span>.</span>
+          </span>
+          <span>
+            Salman Ahmed<span className="brand-role">Full Stack Developer</span>
+          </span>
         </a>
-
-        <div className="flex items-center gap-4">
+        <div className="desktop-links">
+          {navigation.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              aria-current={active === item.id ? "location" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+        <div className="nav-actions">
           <button
+            className="icon-button theme-toggle"
             onClick={toggleTheme}
-            className="hidden lg:block text-sm px-2 py-1 rounded-md border border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white transition"
+            aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
           >
-            {isDark ? "Light Mode" : "Dark Mode"}
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-
+          <a className="nav-contact" href="#contact">
+            Let’s talk <ArrowUpRight size={16} />
+          </a>
           <button
-            className="lg:hidden p-2 rounded-md text-sky-600 hover:bg-sky-100 transition"
-            aria-label="Toggle navigation menu"
+            ref={menuButton}
+            className="icon-button menu-toggle"
             onClick={() => setOpen(!open)}
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
           >
-            <Menu className="h-6 w-6" />
+            {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-
-        <ul className="hidden lg:flex space-x-8">
-          {NAV_ITEMS.map(({ label, href, icon: Icon }) => (
-            <li key={href}>
-              <a
-                href={href}
-                className={`group relative inline-flex items-center space-x-1 font-medium transition-colors duration-300 ${
-                  active === href
-                    ? "text-sky-600"
-                    : isDark
-                    ? "text-slate-300 hover:text-sky-400"
-                    : "text-slate-700 hover:text-sky-600"
-                }`}
-              >
-                <Icon className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
-                <span>{label}</span>
-                <span
-                  className={`absolute left-0 -bottom-1 h-0.5 bg-sky-600 transition-all duration-300 ${
-                    active === href ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-                ></span>
-              </a>
-            </li>
-          ))}
-        </ul>
       </nav>
-
-      <ul
-        ref={dropdownRef}
-        className={`lg:hidden absolute top-full left-0 right-0 shadow-lg px-4 py-4 space-y-3 transform transition-all duration-300 z-40 ${
-          open
-            ? "pointer-events-auto translate-y-0 opacity-100 max-h-screen"
-            : "pointer-events-none -translate-y-4 opacity-0 max-h-0 overflow-hidden"
-        } ${isDark ? "bg-slate-900 text-white" : "bg-white backdrop-blur-md"}`}
+      <nav
+        className="mobile-links container"
+        id="mobile-navigation"
+        aria-label="Mobile navigation"
+        hidden={!open}
       >
-        <li>
-          <button
-            onClick={toggleTheme}
-            className="mb-3 w-28 text-left text-sm px-2 py-2 rounded-md border border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white transition"
-          >
-            {isDark ? "Light Mode" : "Dark Mode"}
-          </button>
-        </li>
-        {NAV_ITEMS.map(({ label, href, icon: Icon }) => (
-          <li key={href}>
-            <a
-              href={href}
-              className={`flex items-center space-x-3 transition-colors duration-300 ${
-                active === href
-                  ? "text-sky-500"
-                  : isDark
-                  ? "text-slate-300 hover:text-sky-400"
-                  : "text-slate-700 hover:text-sky-600"
-              }`}
-              onClick={() => setOpen(false)}
-            >
-              <Icon className="h-5 w-5" />
-              <span>{label}</span>
-            </a>
-          </li>
+        {navigation.map((item) => (
+          <a key={item.id} href={`#${item.id}`} onClick={() => setOpen(false)}>
+            {item.label}
+            <ArrowUpRight size={16} />
+          </a>
         ))}
-      </ul>
+        <a href="#contact" onClick={() => setOpen(false)}>
+          Contact
+          <ArrowUpRight size={16} />
+        </a>
+      </nav>
     </header>
   );
 }

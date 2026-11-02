@@ -1,170 +1,124 @@
-import { motion } from "framer-motion";
-import { useTheme } from "../contexts/ThemeContext";
-import { FaCode, FaDatabase, FaHeadset, FaAmazon, FaStore } from "react-icons/fa";
-import { MdOutlineWeb, MdSupportAgent } from "react-icons/md";
-import { SiMongodb, SiExpress, SiReact, SiNodedotjs } from "react-icons/si";
-
-const services = [
-  {
-    category: "Web Development",
-    icon: <MdOutlineWeb className="text-blue-500" />,
-    roles: [
-      {
-        title: "Full Stack Developer",
-        description:
-          "Build scalable, responsive, and secure web applications using the MERN stack. End-to-end application development, from backend to frontend.",
-        tools: [
-          { label: "MongoDB", icon: <SiMongodb /> },
-          { label: "Express.js", icon: <SiExpress /> },
-          { label: "React.js", icon: <SiReact /> },
-          { label: "Node.js", icon: <SiNodedotjs /> },
-        ],
-      },
-      {
-        title: "Frontend Developer",
-        description:
-          "Craft interactive user interfaces with React, Tailwind CSS, and responsive design techniques for optimal cross-device experience.",
-        tools: [
-          { label: "React.js", icon: <SiReact /> },
-          { label: "Tailwind CSS" },
-        ],
-      },
-        {
-        title: "Database Management",
-        description:
-          "Efficiently handle and organize data using DBMS concepts with hands-on SQL and NoSQL experience.",
-        tools: [
-          { label: "SQL" },
-          { label: "MongoDB", icon: <SiMongodb /> },
-        ],
-      },
-    ],
-  },
-  {
-    category: "Virtual Assistant",
-    icon: <MdSupportAgent className="text-purple-500" />,
-    roles: [
-      {
-        title: "Dropshipping Specialist",
-        description:
-          "Manage Amazon, Walmart & Costco dropshipping operations: product sourcing, listing optimization, and order fulfillment.",
-        tools: [
-          { label: "Amazon", icon: <FaAmazon /> },
-          { label: "Walmart", icon: <FaStore /> },
-          { label: "Costco" },
-        ],
-      },
-      {
-        title: "Account Health & Performance",
-        description:
-          "Monitor and maintain seller account metrics and health for optimal platform standing.",
-        tools: [
-          { label: "Account Reports" },
-          { label: "Appeals Handling" },
-        ],
-      },
-      {
-        title: "Customer Service",
-        description:
-          "Respond to customer inquiries, resolve complaints, and manage orders to ensure satisfaction.",
-        tools: [
-          { label: "Live Chat" },
-          { label: "Email Support" },
-        ],
-      },
-    ],
-  },
-];
-
+import { ArrowRight, Bot, Container, ShieldCheck } from "lucide-react";
+import { workflow } from "../data/portfolio";
+import { Reveal, SectionHeading, Tags } from "./ui";
 export default function Services() {
-  const { isDark } = useTheme();
-
   return (
-    <section id="services" className={`relative py-20 text-center transition-colors duration-300 ${
-      isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"
-    }`}>
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="max-w-5xl mx-auto px-4"
-      >
-        <h2 className={`text-3xl md:text-4xl font-bold mb-12 flex items-center justify-center gap-3 ${
-          isDark ? "text-sky-400" : "text-sky-600"
-        }`}>
-          <FaCode className="text-sky-500 text-4xl" /> Services
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-8 text-left">
-          {services.map(({ category, icon, roles }) => (
-            <motion.div
-              key={category}
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              viewport={{ once: true }}
-              className={`p-6 rounded-xl shadow-md border transition-colors duration-300 ${
-                isDark 
-                  ? "bg-slate-800 border-slate-700 text-white" 
-                  : "bg-slate-50 border-slate-200 text-slate-900"
-              }`}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="text-3xl">{icon}</div>
-                <h3 className={`text-xl font-semibold ${
-                  isDark ? "text-white" : "text-slate-700"
-                }`}>
-                  {category}
-                </h3>
-              </div>
-              <div className="space-y-6">
-                {roles.map(({ title, description, tools }) => (
-                  <motion.div
-                    key={title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className={`border rounded-lg p-4 shadow-sm transition-colors duration-300 ${
-                      isDark 
-                        ? "bg-slate-900 border-slate-700 text-white" 
-                        : "bg-white border-slate-200 text-slate-900"
-                    }`}
-                  >
-                    <h4 className={`text-lg font-semibold ${
-                      isDark ? "text-sky-400" : "text-sky-500"
-                    }`}>
-                      {title}
-                    </h4>
-                    <p className={`text-sm mb-2 ${
-                      isDark ? "text-slate-300" : "text-slate-600"
-                    }`}>
-                      {description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 text-xs">
-                      {tools.map(({ label, icon }) => (
-                        <span
-                          key={label}
-                          className={`flex items-center gap-1 px-2 py-1 rounded-full ${
-                            isDark 
-                              ? "bg-sky-700 text-white" 
-                              : "bg-sky-100 text-sky-700"
-                          }`}
-                        >
-                          {icon && <>{icon}</>}
-                          {label}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+    <section id="services" className="section engineering-section">
+      <div className="container">
+        <SectionHeading
+          number="05"
+          label="BEYOND THE CODE"
+          title={
+            <>
+              Building better habits.
+              <br />
+              <span className="muted-heading">One layer at a time.</span>
+            </>
+          }
+          text="The engineering practices and technical interests that shape how I approach the work."
+        />
+        <div className="engineering-grid">
+          <Reveal className="engineering-card">
+            <Container size={26} />
+            <p className="eyebrow">DEVOPS & CLOUD</p>
+            <h3>Understand the environment.</h3>
+            <p>
+              Practical work with Dockerfiles, Compose, Docker Desktop, and WSL
+              2, including setup issues, container networking, and getting a
+              containerized application running.
+            </p>
+            <p>
+              Experience with environment variables and deployment
+              troubleshooting across Render, Railway, Vercel, and Neon. GitHub
+              Actions and CI/CD remain areas of active practice.
+            </p>
+            <Tags items={["Docker", "Compose", "WSL 2", "GitHub Actions"]} />
+            <div className="learning-note">
+              <span className="status-dot" />
+              <p>
+                <strong>Currently exploring:</strong> AWS and cloud fundamentals
+                through demonstrations and the Flocci project environment.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal className="engineering-card" delay={0.06}>
+            <Bot size={26} />
+            <p className="eyebrow">AI-ASSISTED ENGINEERING</p>
+            <h3>Prompt carefully. Review critically.</h3>
+            <p>
+              I use explicit requirements and constraints to improve
+              code-generation workflows, investigate recurring LLM failures, and
+              review generated implementations before integration.
+            </p>
+            <p>
+              My studies cover LLM fundamentals, RAG, fine-tuning, PEFT / LoRA,
+              RLHF, catastrophic forgetting, reward hacking, and evaluation
+              concepts such as ROUGE and BLEU.
+            </p>
+            <Tags
+              items={[
+                "Prompt engineering",
+                "OpenAI integration",
+                "Hugging Face",
+              ]}
+            />
+            <div className="learning-note">
+              <span className="status-dot" />
+              <p>
+                <strong>Learning focus:</strong> LLM applications and agents,
+                with a clear distinction between experiments and production
+                experience.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal className="engineering-card" delay={0.12}>
+            <ShieldCheck size={26} />
+            <p className="eyebrow">SECURE DEVELOPMENT</p>
+            <h3>Question the assumptions.</h3>
+            <p>
+              Practice checking authentication, RBAC, input validation, and API
+              boundaries. Explore injection, stored XSS, broken access control,
+              and prompt-injection risks through guided exercises.
+            </p>
+            <p>
+              Use Postman for validation and explore Semgrep, ESLint, and GitHub
+              Actions for earlier feedback. Study OWASP LLM concepts alongside
+              networking and communication fundamentals.
+            </p>
+            <Tags
+              items={[
+                "API security",
+                "Semgrep",
+                "ESLint",
+                "OWASP LLM concepts",
+              ]}
+            />
+            <div className="learning-note">
+              <span className="status-dot" />
+              <p>
+                <strong>Developing knowledge:</strong> security and networking
+                fundamentals through courses, tutorials, and lab work.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+        <Reveal className="workflow-heading">
+          <h3>How I approach a build</h3>
+          <span>
+            TOOLS & WORKFLOW <ArrowRight size={16} />
+          </span>
+        </Reveal>
+        <div className="workflow-grid">
+          {workflow.map((step) => (
+            <Reveal className="workflow-step" key={step.number}>
+              <span className="workflow-number">{step.number}</span>
+              <h4>{step.title}</h4>
+              <p>{step.text}</p>
+              <span className="workflow-tools">{step.tools}</span>
+            </Reveal>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

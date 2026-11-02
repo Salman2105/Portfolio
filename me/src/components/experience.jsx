@@ -1,130 +1,103 @@
-import { motion } from "framer-motion";
-import { useTheme } from "../contexts/ThemeContext";
-import { FaReact, FaAmazon, FaStore } from "react-icons/fa";
-import { SiMongodb, SiExpress, SiNodedotjs, SiRailway } from "react-icons/si";
-
-const experiences = [
-  {
-    title: "MERN Stack Developer",
-    period: "2022 – Present",
-    description:
-      "Passionate developer with hands‑on experience building full‑stack web applications using MongoDB, Express.js, React.js, and Node.js. Skilled at crafting responsive, scalable, and secure systems, RESTful APIs, and deploying to cloud platforms like Railway.",
-    icon: <FaReact className="text-sky-500" />,
-    tools: [
-      { label: "MongoDB", icon: <SiMongodb className="text-green-500" /> },
-      { label: "Express.js", icon: <SiExpress className="text-slate-500" /> },
-      { label: "React.js", icon: <FaReact className="text-sky-500" /> },
-      { label: "Node.js", icon: <SiNodedotjs className="text-green-600" /> },
-      { label: "REST APIs" },
-      { label: "Railway", icon: <SiRailway className="text-violet-600" /> },
-    ],
-  },
-  {
-    title: "E‑commerce Specialist (Dropshipping)",
-    period: "2021 – Present",
-    description:
-      "Seasoned specialist with 3+ years managing Amazon, Costco, and Walmart dropshipping operations. Expertise in product research, listing optimization, order fulfillment, and account health management.",
-    icon: <FaStore className="text-yellow-500" />,
-    tools: [
-      { label: "Amazon", icon: <FaAmazon className="text-yellow-500" /> },
-      { label: "Walmart", icon: <FaStore className="text-blue-500" /> },
-      { label: "Costco" },
-      { label: "Product Research" },
-      { label: "Listing Tools" },
-      { label: "Customer Handling" },
-    ],
-  },
-];
-
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  CalendarDays,
+  MapPin,
+} from "lucide-react";
+import { Reveal, SectionHeading, Tags } from "./ui";
 export default function Experience() {
-  const { isDark } = useTheme();
-
   return (
-    <section
-      id="experience"
-      className={`relative py-20 text-center transition-colors duration-300 ${
-        isDark ? "bg-slate-950 text-white" : "bg-slate-50 text-slate-900"
-      }`}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="max-w-4xl mx-auto px-4"
-      >
-        <h2
-          className={`text-3xl md:text-4xl font-bold mb-12 ${
-            isDark ? "text-sky-400" : "text-sky-600"
-          }`}
-        >
-          Experience
-        </h2>
-
-        <div
-          className={`relative border-l ml-4 ${
-            isDark ? "border-sky-400" : "border-sky-500"
-          }`}
-        >
-          {experiences.map(
-            ({ title, period, description, icon, tools }, idx) => (
-              <motion.div
-                key={title}
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.3 }}
-                className="relative mb-12 pl-6"
-              >
-                <div
-                  className={`absolute -left-4 top-1 w-6 h-6 rounded-full border-4 flex items-center justify-center ${
-                    isDark
-                      ? "bg-slate-950 border-sky-400"
-                      : "bg-white border-sky-500"
-                  }`}
-                >
-                  <span className="text-lg">{icon}</span>
-                </div>
-
-                <h3
-                  className={`text-xl font-semibold mb-1 ${
-                    isDark ? "text-white" : "text-slate-700"
-                  }`}
-                >
-                  {title}
-                </h3>
-                <span
-                  className={`text-xs italic block mb-2 ${
-                    isDark ? "text-slate-400" : "text-slate-500"
-                  }`}
-                >
-                  {period}
+    <section id="experience" className="section experience-section">
+      <div className="container">
+        <SectionHeading
+          number="03"
+          label="THE JOURNEY"
+          title={
+            <>
+              Real work.
+              <br />
+              <span className="muted-heading">Continuous growth.</span>
+            </>
+          }
+          text="Learning in a team, contributing to existing products, and building a stronger engineering foundation."
+        />
+        <div className="experience-layout">
+          <Reveal className="experience-side">
+            <span className="experience-icon">
+              <BriefcaseBusiness size={26} strokeWidth={1.4} />
+            </span>
+            <h3>MeissaSoft</h3>
+            <p>Full Stack Developer</p>
+            <span className="current-badge">
+              <span className="status-dot" /> Current role
+            </span>
+            <div className="experience-facts">
+              <span>
+                <CalendarDays size={15} />
+                <span>
+                  <time dateTime="2025-12-13">13 Dec 2025</time> — Present
                 </span>
-                <p
-                  className={`text-sm leading-relaxed mb-3 ${
-                    isDark ? "text-slate-300" : "text-slate-600"
-                  }`}
-                >
-                  {description}
-                </p>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  {tools.map(({ label, icon }) => (
-                    <span
-                      key={label}
-                      className={`flex items-center gap-1 px-2 py-1 rounded-full ${
-                        isDark
-                          ? "bg-sky-700 text-white"
-                          : "bg-sky-100 text-sky-700"
-                      }`}
-                    >
-                      {icon && <>{icon}</>}
-                      {label}
-                    </span>
-                  ))}
+              </span>
+              <span>
+                <MapPin size={15} /> Lahore, Pakistan
+              </span>
+            </div>
+          </Reveal>
+          <Reveal className="experience-detail" delay={0.08}>
+            <p className="experience-lead">
+              Putting full-stack development into practice, from product
+              interfaces to backend workflows.
+            </p>
+            <div className="experience-points">
+              {[
+                [
+                  "Application development",
+                  "Contribute to React, Next.js, and TypeScript interfaces and Node.js / Express backend features. Work on REST APIs, authentication, authorization, validation, and database integration.",
+                ],
+                [
+                  "Product & collaboration",
+                  "Implement interface improvements from design references, resolve frontend and backend issues, and collaborate through Git branches, pull requests, code review, and documentation.",
+                ],
+                [
+                  "Testing & engineering practice",
+                  "Use Postman and functional checks to investigate behavior, including email delivery and attachments. Review AI-generated code for correctness, maintainability, and potential security issues.",
+                ],
+                [
+                  "Deployment & technical exploration",
+                  "Work through environment configuration and deployment issues; explore Docker, Compose, CI/CD, automated security checks, and cloud fundamentals.",
+                ],
+              ].map(([title, text]) => (
+                <div key={title}>
+                  <span className="experience-point-dot" />
+                  <h4>{title}</h4>
+                  <p>{text}</p>
                 </div>
-              </motion.div>
-            )
-          )}
+              ))}
+            </div>
+            <Tags
+              items={[
+                "React / Next.js",
+                "TypeScript",
+                "Node.js",
+                "PostgreSQL / MongoDB",
+                "GitHub",
+                "Docker",
+              ]}
+            />
+            <a className="text-link" href="#projects">
+              Explore related work <ArrowUpRight size={16} />
+            </a>
+          </Reveal>
         </div>
-      </motion.div>
+        <Reveal className="education-strip">
+          <span className="small-label">EDUCATION</span>
+          <div>
+            <h3>BS Information Technology</h3>
+            <p>University of the Punjab · Gujranwala Campus</p>
+          </div>
+          <span className="education-status">Graduate</span>
+        </Reveal>
+      </div>
     </section>
   );
 }

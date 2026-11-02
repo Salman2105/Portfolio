@@ -1,27 +1,28 @@
-import React from 'react'
-import Navbar from '../components/navbar';
-import Hero from '../components/hero';
-import AboutMe from '../components/aboutme';
-import Projects from '../components/project';
-import Skills from '../components/skills';
-import Experience from '../components/experience';
-import Services from '../components/services';
-import Contact from '../components/contact';
-import Footer from '../components/footer';
-
-export default function Home() {
+import Navbar from "../components/navbar";
+import Hero from "../components/hero";
+import AboutMe from "../components/aboutme";
+import Projects from "../components/project";
+import Skills from "../components/skills";
+import Experience from "../components/experience";
+import Services from "../components/services";
+import Learning from "../components/learning";
+import Contact from "../components/contact";
+import Footer from "../components/footer";
+export default function Home({ onPrivacy }) {
   return (
-    <div>
-        <Navbar />
+    <>
+      <Navbar />
+      <main id="main" tabIndex={-1}>
         <Hero />
         <AboutMe />
         <Projects />
-        <Skills />
         <Experience />
+        <Skills />
         <Services />
+        <Learning />
         <Contact />
-        <Footer />
-
-    </div>
-  )
+      </main>
+      <Footer onPrivacy={onPrivacy} />
+    </>
+  );
 }

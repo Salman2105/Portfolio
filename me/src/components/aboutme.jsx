@@ -1,71 +1,81 @@
-import { motion } from "framer-motion";
-import { useTheme } from "../contexts/ThemeContext";
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs } from "react-icons/fa";
-import { SiMongodb, SiExpress, SiMysql } from "react-icons/si";
-
-const skills = [
-  { label: "HTML", icon: <FaHtml5 className="text-orange-500" /> },
-  { label: "CSS", icon: <FaCss3Alt className="text-blue-500" /> },
-  { label: "JavaScript", icon: <FaJs className="text-yellow-400" /> },
-  { label: "React", icon: <FaReact className="text-sky-400" /> },
-  { label: "Node.js", icon: <FaNodeJs className="text-green-600" /> },
-  { label: "Express", icon: <SiExpress className="text-slate-600" /> },
-  { label: "MongoDB", icon: <SiMongodb className="text-green-500" /> },
-  { label: "SQL", icon: <SiMysql className="text-sky-600" /> },
-];
-
+import { ArrowUpRight, Braces, Layers3, ShieldCheck } from "lucide-react";
+import { Reveal, SectionHeading } from "./ui";
 export default function AboutMe() {
-  const { isDark } = useTheme();
-
   return (
-    <section
-      id="about"
-      className={`relative py-20 text-center transition-colors duration-300 ${
-        isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"
-      }`}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="max-w-4xl mx-auto px-4"
-      >
-        <h2
-          className={`text-3xl md:text-4xl font-bold mb-6 ${
-            isDark ? "text-sky-400" : "text-sky-600"
-          }`}
-        >
-          About Me
-        </h2>
-        <p
-          className={`text-lg mb-12 ${
-            isDark ? "text-slate-300" : "text-slate-700"
-          }`}
-        >
-        MERN Stack Developer with hands-on experience using AI to build modern web applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Adept at creating responsive, secure, and scalable systems with a strong focus on RESTful APIs and production-grade deployment. Also a skilled E-commerce Virtual Assistant with 3+ years of experience in managing dropshipping operations on Amazon, Costco, and Walmart—specializing in product research, listing optimization, and maintaining account health.
-        </p>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 justify-center">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={skill.label}
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="flex flex-col items-center"
-            >
-              <div className="text-4xl mb-2">{skill.icon}</div>
-              <span
-                className={`text-sm font-medium ${
-                  isDark ? "text-slate-200" : "text-slate-600"
-                }`}
-              >
-                {skill.label}
-              </span>
-            </motion.div>
+    <section id="about" className="section about-section">
+      <div className="container">
+        <SectionHeading
+          number="01"
+          label="THE APPROACH"
+          title={
+            <>
+              Curiosity is the starting point.
+              <br />
+              <span className="muted-heading">Care is in the details.</span>
+            </>
+          }
+        />
+        <div className="about-grid">
+          <Reveal className="about-statement">
+            <span className="about-symbol" aria-hidden="true">
+              {"{ }"}
+            </span>
+            <p>
+              I like understanding how things work.
+              <br />
+              <strong>Then making them work better.</strong>
+            </p>
+          </Reveal>
+          <Reveal className="about-copy" delay={0.1}>
+            <p>
+              I’m Salman Ahmed, a Full Stack Developer and BS Information
+              Technology graduate from the University of the Punjab, Gujranwala
+              Campus. At MeissaSoft, I’m turning that foundation into practical
+              experience across frontend development, backend systems, and
+              deployment.
+            </p>
+            <p>
+              My work spans React and TypeScript interfaces, Node.js APIs, and
+              SQL and NoSQL databases. Alongside product work, I’m learning how
+              containers, AI tools, and security checks fit into a dependable
+              development process.
+            </p>
+            <p>
+              I value clear communication, considered decisions, and code that
+              another developer can understand. I’m interested in contributing
+              to engineering teams in Germany and internationally.
+            </p>
+            <a className="text-link" href="#experience">
+              More about my experience <ArrowUpRight size={16} />
+            </a>
+          </Reveal>
+        </div>
+        <div className="principles">
+          {[
+            {
+              Icon: Layers3,
+              title: "Think across the stack",
+              text: "Connect the interface, API, and data instead of treating them in isolation.",
+            },
+            {
+              Icon: ShieldCheck,
+              title: "Build with care",
+              text: "Check validation, access boundaries, and failure paths early.",
+            },
+            {
+              Icon: Braces,
+              title: "Understand what ships",
+              text: "Use AI to support the work, and review the code that goes into it.",
+            },
+          ].map(({ Icon, title, text }, index) => (
+            <Reveal className="principle" key={title} delay={index * 0.06}>
+              <Icon size={22} strokeWidth={1.6} />
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </Reveal>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

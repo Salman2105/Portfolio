@@ -1,22 +1,27 @@
-import React from 'react'
-import './App.css'
-import { Toaster } from 'react-hot-toast'
-import { ThemeProvider } from './contexts/ThemeContext'
-import Home from './pages/Home'
+import { useState } from "react";
+import { MotionConfig } from "framer-motion";
+import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import Home from "./pages/Home";
+import Privacy from "./components/privacy";
 import usePageTracking from "./usePageTracking";
-
-
-function App() {
-  usePageTracking(); // 👈 now tracking route changes
-
+import "./App.css";
+export default function App() {
+  const [privacy, setPrivacy] = useState(false);
+  usePageTracking();
   return (
     <ThemeProvider>
-      <Toaster position="top-center" reverseOrder={false} />
-      <div>
-        <Home />
-      </div>
+      <MotionConfig reducedMotion="user">
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        <Home onPrivacy={() => setPrivacy(true)} />
+        <Privacy open={privacy} onClose={() => setPrivacy(false)} />
+        <Toaster
+          position="bottom-center"
+          toastOptions={{ className: "site-toast" }}
+        />
+      </MotionConfig>
     </ThemeProvider>
-  )
+  );
 }
-
-export default App

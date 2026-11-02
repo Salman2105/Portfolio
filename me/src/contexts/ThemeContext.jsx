@@ -1,47 +1,27 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-const ThemeContext = createContext();
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
-
-export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setIsDark(savedTheme === 'dark');
+import { useEffect, useState } from "react";
+import { ThemeContext } from "./theme";
+export function ThemeProvider({ children }) {
+  const [isDark, setIsDark] = useState(() => {
+    try {
+      return localStorage.getItem("theme") === "dark";
+    } catch {
+      return false;
     }
-  }, []);
-
+  });
   useEffect(() => {
-    // Update localStorage and document class when theme changes
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    document.documentElement.classList.toggle("dark", isDark);
+    document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+    try {
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    } catch {
+      /* Works without storage. */
     }
   }, [isDark]);
-
-  const toggleTheme = () => {
-    setIsDark(prev => !prev);
-  };
-
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
-      <div className={`min-h-screen transition-colors duration-300 ${
-        isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'
-      }`}>
-        {children}
-      </div>
+    <ThemeContext.Provider
+      value={{ isDark, toggleTheme: () => setIsDark((previous) => !previous) }}
+    >
+      {children}
     </ThemeContext.Provider>
   );
-};
+}
